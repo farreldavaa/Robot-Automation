@@ -52,98 +52,41 @@ impl Component for Navtop {
         type Anchor = RouterAnchor<AppRoute>;
 
         html! {
-            <div
-                style="
-                    background: red;
-                    text-align: center;
-                "
-            >
-                <span
-                    class="display-2"
-                >
-                    { "Navtop" }
-                </span>
+            <div class="base" style="background: teal; text-align: center;">
+                <div class="navbar">
+                    <h5>{"Robot Automation"}</h5>
+                        <div class="navbar-option">
+                            <div style=" text-decoration: none; color: black;">
+                                <Anchor route=AppRoute::Home>
+                                    <label class="link" style=" text-decoration: none!important; ">
+                                        {"Homepage"}
+                                    </label>
+                                </Anchor>
+                            </div>
 
-
-                <div
-                    style="
-                        text-decoration: none;
-                        color: rgb(100,100,100);
-                    "
-                >
-                    <Anchor route=AppRoute::Home>
-                        <p
-                            class="link"
-                            style="
-                                text-decoration: none!important;
-                                color: rgb(100,100,100);
-                            "
-                        >
-                            {"Home"}
-                        </p>
-                    </Anchor>
+                            <div style=" text-decoration: none; color: rgb(100,100,100);">
+                                <Anchor route=AppRoute::InputPage>
+                                    <label class="link" style=" text-decoration: none!important;" >
+                                        {"Create new"}
+                                    </label>
+                                </Anchor>
+                            </div>
+                        </div>
                 </div>
-
-                <Anchor route=AppRoute::Other>
-                  {"Other"}
-                </Anchor>
-
-                <div
-                    style="
-                        text-decoration: none;
-                        color: rgb(100,100,100);
-                    "
-                >
-                    <Anchor route=AppRoute::InputPage>
-                        <p
-                            class="link"
-                            style="
-                                text-decoration: none!important;
-                                color: rgb(100,100,100);
-                            "
-                        >
-                            {"Page Input"}
-                        </p>
-                    </Anchor>
-                </div>
-
-                <div
-                    style="
-                        text-decoration: none;
-                        color: rgb(100,100,100);
-                    "
-                >
-                    <Anchor route=AppRoute::Schedules>
-                        <p
-                            class="link"
-                            style="
-                                text-decoration: none!important;
-                                color: rgb(100,100,100);
-                            "
-                        >
-                            {"Schedules"}
-                        </p>
-                    </Anchor>
-                </div>
-
-                <div
-                    style="
-                        text-decoration: none;
-                        color: rgb(100,100,100);
-                    "
-                >
-                    <Anchor route=AppRoute::Login>
-                        <p
-                            class="link"
-                            style="
-                                text-decoration: none!important;
-                                color: rgb(100,100,100);
-                            "
-                        >
-                            {"Login"}
-                        </p>
-                    </Anchor>
-                </div>
+                // <div style="text-decoration: none; color: rgb(100,100,100);">
+                //     <Anchor route=AppRoute::Schedules>
+                //         <p class="link" style=" text-decoration: none!important; color: rgb(100,100,100);">
+                //             {"Schedules"}
+                //         </p>
+                //     </Anchor>
+                // </div>
+                // <div style=" text-decoration: none; color: rgb(100,100,100);">
+                //     <Anchor route=AppRoute::Login>
+                //         <p class="link" style=" text-decoration: none!important; color: rgb(100,100,100);">
+                //             {"Login"}
+                //         </p>
+                //     </Anchor>
+                // </div>
 
             </div>
         }

@@ -9,10 +9,21 @@ use yew::{
     },
 };
 
+use yew_router::prelude::*;
+use crate::router::route::AppRoute;
+use crate::types::var::{
+    UserAccount,
+};
 
 pub enum Msg {
     AddOne,
     InputText(String),
+}
+
+pub struct PageInput {
+
+    username: String,
+    status: String,
 }
 
 pub struct HomePage {
@@ -69,39 +80,35 @@ impl Component for HomePage {
     }
 
     fn view(&self) -> Html {
+
+        type Anchor = RouterAnchor<AppRoute>;
+
         html! {
-            <div
-                style="
-                    text-align: center;
-                    height: 500px;
-                    background: rgb(200,200,200);
-                "
-                class="text-big"
-            >
-                { "HomePage" }
-                <Content message={self.message.clone()}/>
-
-                <div
-                    class="input-group mb-3"
-                    style="
-                        margin: auto;
-                        width: 400px;
-                    "
-                >
-                    <span class="input-group-text" id="basic-addon1">{ "@" }</span>
-
-                    <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Message"
-                        aria-label="Username"
-                        aria-describedby="basic-addon1"
-                        // value={self.username.clone()}
-                        oninput=self.link.callback(|data: InputData| Msg::InputText(data.value))
-                        // disabled={true}
-                    />
+            <div class="base">
+                <div class="homepage">
+                    <div class="container-md mb-3" style="justify-content: space-between; display: flex; border-radius: 10px;">
+                        <span>{"<Map 1>"}</span>
+                            <Anchor route=AppRoute::InputPage>
+                                <button type="button" class="btn btn-primary btn-sm pl-3">{"Setting"}
+                                </button>
+                        </Anchor>
+                    </div>
+                    <div class="container-md mb-3" style="justify-content: space-between; display: flex; border-radius: 10px;">
+                        <span style="padding-right: 980px;">{"<Map 2>"}</span>
+                            <Anchor route=AppRoute::InputPage>
+                                <button type="button" class="btn btn-primary btn-sm pl-3">{"Setting"}
+                                </button>
+                            </Anchor>
+                    </div>
+                    <div class="container-md mb-3" style="justify-content: space-between; display: flex; border-radius: 10px;">
+                        <span style="padding-right: 980px;">{"<Map 3>"}</span>
+                            <Anchor route=AppRoute::InputPage>
+                                <button type="button" class="btn btn-primary btn-sm pl-3">{"Setting"}
+                                </button>
+                            </Anchor>
+                    </div>
+                    </div>
                 </div>
-            </div>
         }
     }
 }

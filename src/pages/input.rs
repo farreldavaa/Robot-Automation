@@ -140,64 +140,90 @@ impl Component for PageInput {
 
     fn view(&self) -> Html {
         html! {
-            <div
-                style="
-                    text-align: center;
-                    height: 500px;
-                    background: rgb(200,200,200);
-                "
-                class="text-big"
-            >
-                { "Page Input" }
-                
-
-                <div
-                    class="input-group mb-3"
-                    style="
-                        margin: auto;
-                        width: 400px;
-                    "
-                >
-                    <span class="input-group-text" id="basic-addon1">{ "@" }</span>
-
-                    <input
-                        type="text"
-                        class="form-control"
-                        placeholder="User"
-                        aria-label="Username"
-                        aria-describedby="basic-addon1"
-                        // value={self.username.clone()}
+            <div class="base-form">
+                <h5>{"Basic Information"}</h5>
+                <div class="input-group mb-3" style=" margin: auto; width: 400px;">
+                    <span class="input-group-text"></span>
+                        <input type="text" class="form-control" placeholder="Name"
                         oninput=self.link.callback(|data: InputData| Msg::InputText(data.value))
-                        // disabled={true}
-                    />
+                        />
                 </div>
-
-                <select
-                    class="form-select mb-4"
-                    style="
-                        margin: auto;
-                        width: 400px;
-                    "
-                    aria-label="Default select example"
+                <div class="input-group mb-3" style=" margin: auto; width: 400px">
+                    <span class="input-group-text"></span>
+                        <input type="text" class="form-control" placeholder="Description"
+                        oninput=self.link.callback(|data: InputData| Msg::InputText(data.value))
+                        />
+                </div>
+                <h5>{"Credential Platform"}</h5>
+                <div class="input-group mb-3" style=" margin: auto; width: 400px">
+                    <span class="input-group-text"></span>
+                        <input type="text" class="form-control" placeholder="Email"
+                        oninput=self.link.callback(|data: InputData| Msg::InputText(data.value))
+                        />
+                </div>
+                <div class="input-group mb-3" style=" margin: auto; width: 400px">
+                    <span class="input-group-text"></span>
+                        <input type="text" class="form-control" placeholder="API Key"
+                        oninput=self.link.callback(|data: InputData| Msg::InputText(data.value))
+                        />
+                </div>
+                <select class="form-select mb-4" style=" margin: auto; width: 400px;" aria-label="Default select example"
                     onchange=self.link.callback(|e| {
                         if let ChangeData::Select(select) = e {
                             let value = select.value();
-
                             Msg::InputSelect(value)
                         } else {
                             Msg::InputSelect("No value".to_string())
                         }
                     })
-                    // disabled={true}
                 >
-                    <option>{ "Open this select menu"}</option>
-                    <option
-                        // selected={true}
-                        value="superhero"
-                    >
-                        { "Superhero" }
-                    </option>
-                    <option value="normal">{ "Normal" }</option>
+                    <option>{ "Select Platform"}</option>
+                    <option value="superhero">{ "Jira" }</option>
+                    <option value="normal">{ "Telkom Automation" }</option>
+                </select>
+                <h5>{"Scheduler Setting"}</h5>
+                <select class="form-select mb-4" style=" margin: auto; width: 400px;" aria-label="Default select example"
+                    onchange=self.link.callback(|e| {
+                        if let ChangeData::Select(select) = e {
+                            let value = select.value();
+                            Msg::InputSelect(value)
+                        } else {
+                            Msg::InputSelect("No value".to_string())
+                        }
+                    })
+                >
+                    <option>{ "Scheduler"}</option>
+                    <option value="3 Days">{ "3 Days" }</option>
+                    <option value="normal">{ "1 Week" }</option>
+                    <option value="normal">{ "1 Month" }</option>
+                </select>
+                <div class="form-check mb-3" style="margin: auto; width:400px;">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                        <label class="form-check-label" for="flexCheckDefault">{"Double Email"}</label>
+                </div>
+                <div class="form-check mb-3" style="margin: auto; width:400px;">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                        <label class="form-check-label" for="flexCheckDefault">{"Double Name"}</label>
+                </div>
+                <div class="form-check mb-3" style="margin: auto; width:400px;">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                        <label class="form-check-label" for="flexCheckDefault">{"Active Status"}</label>
+                </div>
+                <select class="form-select mb-4" style=" margin: auto; width: 400px;" aria-label="Default select example"
+                    onchange=self.link.callback(|e| {
+                        if let ChangeData::Select(select) = e {
+                            let value = select.value();
+                            Msg::InputSelect(value)
+                        } else {
+                            Msg::InputSelect("No value".to_string())
+                        }
+                    })
+                >
+                    <option>{ "Last Active"}</option>
+                        <option value="superhero">
+                            { "Jira" }
+                        </option>
+                    <option value="normal">{ "Telkom Automation" }</option>
                 </select>
 
                 <button
@@ -207,10 +233,8 @@ impl Component for PageInput {
                         Msg::Login
                     })
                 >
-                    { "Login Test" }
+                    { "Create" }
                 </button>
-
-
 
             </div>
         }

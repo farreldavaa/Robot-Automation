@@ -7,7 +7,7 @@ pub enum AppRoute {
     Login,
     #[to="/schedules"]
     Schedules,
-    #[to="/input"]
+    #[to="/create"]
     InputPage,
     #[to="/other"]
     Other,

@@ -7,10 +7,10 @@ use yew_router::{
 
 use crate::pages::{
     homepage::HomePage,
-    other::OtherPage,
     input::PageInput,
     schedules::Schedules,
     login::Login,
+    create::Create,
 };
 use crate::router::route::AppRoute;
 
@@ -66,6 +66,11 @@ impl Component for RenderGuest {
                 //         <Schedules/>
                 //     }
                 // }
+                AppRoute::CreateBot => {
+                    html! {
+                        <Create/>
+                    }
+                }
                 AppRoute::Login => {
                     html! {
                         <Login/>
@@ -74,7 +79,7 @@ impl Component for RenderGuest {
                 _ => {
                     route_service.set_route("/login", ());
                     html! {
-                        <Login/>
+                        <HomePage/>
                     }
                 }
             }

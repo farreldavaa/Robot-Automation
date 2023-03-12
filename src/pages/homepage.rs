@@ -1,6 +1,6 @@
 use yew::prelude::*;
 
-use crate::pages::content::Content;
+// use crate::pages::content::Content;
 
 use yew::{
     prelude::*,
@@ -39,11 +39,11 @@ impl Component for HomePage {
     type Properties = ();
 
     fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        ConsoleService::info("this is homepage..........");
+        ConsoleService::info("Homepage");
         Self {
             link,
             value: 0,
-            message: String::from("initial message"),
+            message: String::from("Initial Message"),
         }
     }
 
@@ -53,7 +53,7 @@ impl Component for HomePage {
             //     input.focus();
             // }
 
-            ConsoleService::info("this is first render homepage.....");
+            ConsoleService::info("First Render");
         }
     }
 
@@ -94,14 +94,14 @@ impl Component for HomePage {
                         </Anchor>
                     </div>
                     <div class="container-md mb-3" style="justify-content: space-between; display: flex; border-radius: 10px;">
-                        <span style="padding-right: 980px;">{"<Map 2>"}</span>
+                        <span>{"<Map 2>"}</span>
                             <Anchor route=AppRoute::InputPage>
                                 <button type="button" class="btn btn-primary btn-sm pl-3">{"Setting"}
                                 </button>
                             </Anchor>
                     </div>
                     <div class="container-md mb-3" style="justify-content: space-between; display: flex; border-radius: 10px;">
-                        <span style="padding-right: 980px;">{"<Map 3>"}</span>
+                        <span>{"<Map 3>"}</span>
                             <Anchor route=AppRoute::InputPage>
                                 <button type="button" class="btn btn-primary btn-sm pl-3">{"Setting"}
                                 </button>

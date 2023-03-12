@@ -4,7 +4,6 @@ use serde::{
 };
 
 
-
 #[derive(Deserialize, Debug, Clone)]
 pub struct User {
     pub name: Option<String>,
@@ -15,6 +14,46 @@ pub struct User {
 pub struct Villain {
     pub name: String,
     pub supervillain: String,
+}
+#[derive(Deserialize, Serialize, Debug, Clone)]
+pub struct Users {
+    pub name: String,
+    pub description: String,
+    pub cloudSessionToken: String,
+    pub platformApiKey: String,
+    pub platformEmail: String,
+    pub platformType: String,
+    pub schedule: i64,
+    pub lastActive: i64,
+    pub active: bool,
+    pub checkActiveStatus: bool,
+    pub checkDoubleEmail: bool,
+    pub checkDoubleName: bool,
+}
+
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct UsersData {
+    pub name: String,
+    pub description: String,
+    pub platformEmail: String,
+    pub platformApiKey: String,
+    pub platformType: String,
+    pub cloudSessionToken: String,
+    pub active: bool,
+    pub schedule: i64,
+    pub lastActive: i64,
+    pub checkActiveStatus: bool,
+    pub checkDoubleEmail: bool,
+    pub checkDoubleName: bool,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct ProjectList {
+    pub list: Option<Vec<UsersData>>,
+    pub world: Option<String>,
+    pub error_description: Option<String>,
+    // other_data: String,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -30,6 +69,16 @@ pub struct SchedulesData {
     pub world: Option<String>,
     pub error_description: Option<String>,
     // other_data: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct PortReturnValueInner{
+    #[serde(rename = "$oid")]
+    id: String, }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct PostReturnValue {
+    insertedId: PortReturnValueInner
 }
 
 #[derive(Serialize, Debug, Clone)]

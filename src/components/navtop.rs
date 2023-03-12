@@ -1,12 +1,19 @@
 use yew::prelude::*;
+use yewdux::prelude::*;
 use yew_router::prelude::*;
 use crate::router::route::AppRoute;
+use std::rc::Rc;
 
-
+use crate::store::store::{
+    CounterStore,
+    CounterOutput,
+    CounterInput,
+    State,
+};
 
 pub enum Msg {
     AddOne,
-
+    GetLogin,
 }
 
 
@@ -37,6 +44,10 @@ impl Component for Navtop {
                 // re-render for it to appear on the page
                 true
             }
+
+            Msg::GetLogin => {
+                true
+            }
         }
     }
 
@@ -54,23 +65,23 @@ impl Component for Navtop {
         html! {
             <div class="base" style="background: teal; text-align: center;">
                 <div class="navbar">
-                    <h5>{"Robot Automation"}</h5>
-                        <div class="navbar-option">
-                            <div style=" text-decoration: none; color: black;">
-                                <Anchor route=AppRoute::Home>
-                                    <label class="link" style=" text-decoration: none!important; ">
-                                        {"Homepage"}
-                                    </label>
-                                </Anchor>
-                            </div>
+                    <h5 style="color: white;">{"Robot Automation"}</h5>
+                        <div class="navbar-option" style="justify-content: space-around; display: flex;">
+                                // <div style=" text-decoration: none; color: black;">
+                                    <Anchor route=AppRoute::Home>
+                                        <label class="link" style=" text-decoration: none!important; ">
+                                            {"Homepage"}
+                                        </label>
+                                    </Anchor>
+                                // </div>
 
-                            <div style=" text-decoration: none; color: rgb(100,100,100);">
-                                <Anchor route=AppRoute::InputPage>
-                                    <label class="link" style=" text-decoration: none!important;" >
-                                        {"Create new"}
-                                    </label>
-                                </Anchor>
-                            </div>
+                                // <div style=" text-decoration: none; color: rgb(100,100,100);">
+                                    <Anchor route=AppRoute::CreateBot>
+                                        <label class="link" style=" text-decoration: none!important;" >
+                                            {"Create new"}
+                                        </label>
+                                    </Anchor>
+                                // </div>
                         </div>
                 </div>
                 // <div style="text-decoration: none; color: rgb(100,100,100);">

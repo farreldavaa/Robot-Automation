@@ -1,0 +1,218 @@
+use yew::prelude::*;
+
+// use crate::pages::content::Content;
+
+use yew::{
+    format::{ Json, Nothing },
+    prelude::*,
+    services::{
+        fetch::{FetchService, FetchTask, Request, Response},
+        ConsoleService,
+    },
+};
+use serde::{
+    Deserialize,
+    Serialize,
+};
+// use serde_json::{
+//     json!
+// };
+// use crate::types::var::{
+//     Schedule,
+//     SchedulesData,
+// };
+
+use yew_router::prelude::*;
+use crate::router::route::AppRoute;
+use crate::types::var::{
+    UserAccount,
+};
+
+pub enum Msg {
+    AddOne,
+    InputText(String),
+    RequestData,
+    GetData(Vec<UsersData>),
+    ResponseError(String),
+}
+
+pub struct PageInput {
+
+    username: String,
+    status: String,
+}
+
+use crate::types::var::{
+    UsersData,
+    ProjectList
+};
+
+
+pub struct Mainpage {
+    // `ComponentLink` is like a reference to a component.
+    // It can be used to send messages to the component
+    project: Vec<UsersData>,
+    fetch_task: Option<FetchTask>,
+    link: ComponentLink<Self>,
+    error: Option<String>,
+    value: i64,
+    message: String,
+}
+
+impl Component for Mainpage {
+    type Message = Msg;
+    type Properties = ();
+
+    fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
+        ConsoleService::info("Mainpage");
+        Self {
+            link,
+            value: 0,
+            message: String::from("Initial Message"),
+            project: vec![],
+            fetch_task: None,
+            error: None,
+        }
+    }
+
+    fn rendered(&mut self, first_render: bool) {
+        if first_render {
+            ConsoleService::info("Project Render");
+        }
+    }
+
+    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+        match msg {
+            Msg::RequestData => {
+
+
+                // FETCHING....
+
+                let request = Request::get("https://atlassian-robot-api.dev-domain.site/robots")
+                    // .header("access_token", get_access_token().unwrap_or_default())
+                    .body(Nothing)
+                    .expect("Could not build request.");
+                let callback = 
+                    self.link.callback(|response: Response<Json<Result<Vec<UsersData>, anyhow::Error>>>| {
+                        let (meta, Json(data)) = response.into_parts();
+                        let status_number = meta.status.as_u16();
+                        
+                        ConsoleService::info(&format!("Status is{:?}", data));
+                        match data {
+                            Ok(dataok) => {
+                                ConsoleService::info(&format!("data response {:?}", &dataok));
+                                if status_number == 200 {
+                                    Msg::GetData(dataok)
+                                } else {
+                                    Msg::ResponseError(String::from("status bukan 200"))
+                                }
+
+                            }
+                            Err(error) => {
+                                // ConsoleService::info("kondisi error dari server mati");
+                                Msg::ResponseError(error.to_string())
+                            }
+                        }
+                    });
+                let userdata = FetchService::fetch(request, callback).expect("failed to start request");
+
+                self.fetch_task = Some(userdata);
+
+
+                true
+            }
+            Msg::GetData(data) => {
+                ConsoleService::info(&format!("data is {:?}", data));
+                self.project = data;
+                true
+            }
+            Msg::AddOne => {
+                self.value += 1;
+                // the value has changed so we need to
+                // re-render for it to appear on the page
+                true
+            }
+            Msg::InputText(data) => {
+                self.message = data;
+                true
+            }
+            Msg::ResponseError(text) => {
+                ConsoleService::info(&format!("error is {:?}", text));
+                self.error = Some(text);
+                true
+            }
+        }
+    }
+
+    fn change(&mut self, _props: Self::Properties) -> ShouldRender {
+        // Should only return "true" if new properties are different to
+        // previously received properties.
+        // This component has no properties so we will always return "false".
+        false
+    }
+
+    fn view(&self) -> Html {
+
+        type Anchor = RouterAnchor<AppRoute>;
+
+        html! {
+            <div class="base">
+                <div class="homepage">
+                    <div class="container-md mb-3" style="border-radius: 10px;">
+                        <div class="container-md mb-3" style="justify-content: space-between; display: flex; border-radius: 10px;">
+                            <h5>{"Bot 1"}</h5>
+                                <Anchor route=AppRoute::InputPage>
+                                    <button type="button" class="btn btn-primary btn-sm pl-3">{"Setting"}
+                                    </button>
+                                </Anchor>
+                        </div>
+                        <div>
+                            <span class="badge bg-success">{"Status : Running"}</span>
+                        </div>
+                    </div>
+                    
+                   
+                    
+                    <div>
+                    <button
+                        class="badge rounded-pill bg-primary"
+                        onclick=self.link.callback(|_| Msg::RequestData)
+                    >
+                        { "Get More Data" }
+                    </button>
+                </div>
+                
+                {self.view_index_data()}
+                    </div>
+                </div>
+        }
+    }
+}
+
+impl Mainpage{
+    fn view_index_data(&self) -> Vec<Html> {
+        self.project.iter().map(|card|{
+            type Anchor = RouterAnchor<AppRoute>;
+                    html!{
+                        <div class="card mt-4 mb-2"
+                        style="background: white;
+                        width: 1200px;
+                        margin: auto;
+                        ">
+                            <div class="card-body" style="color: gray;">
+                                <h4 class="card-title">
+                                    {&card.name}
+                                </h4>
+                                <Anchor route=AppRoute::InputPage>
+                                    <button type="button" class="btn btn-primary btn-sm pl-3">{"Setting"}
+                                    </button>
+                                 </Anchor>
+                                <div>
+                                    <span class="badge bg-success">{&card.active}</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+        }).collect()
+    }
+}

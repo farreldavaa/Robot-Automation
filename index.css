@@ -33,8 +33,30 @@ a {
 .base-form{
     padding: 50px;
     text-align: center;
-    height: 100vh;
+    height: 120vh;
     background-color: rgb(228, 228, 228);
+}
+
+.base-form .form{
+    background-color: white;
+    height: 100vh;
+    padding: 30px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    width: 50vh;
+    border-radius: 20px;
+}
+
+
+.base-form .create{
+    background-color: white;
+    padding: 30px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    width: 50vh;
+    border-radius: 20px;
 }
 
 .base .form-select{
@@ -49,3 +71,19 @@ a {
     padding: 10px;
     background-color: white;
 }
+
+.base-form .btn-block{
+    width: 40vh ;
+    font-size: 16px;
+    margin: 0px;
+    padding: 6px 12px;
+}
+
+.button .btn-danger{
+    padding-left: 10px;
+}
+
+.base-form .img-setting{
+    padding-bottom: 30px;
+}
+

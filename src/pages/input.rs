@@ -31,6 +31,7 @@ pub enum Msg {
     InputSelect(String),
     Login,
     GetData(String),
+    // SelectProject,
     Ignore,
 }
 
@@ -121,10 +122,17 @@ impl Component for PageInput {
             Msg::GetData(data) => {
                 ConsoleService::info(&format!("get data {:?}", data));
 
-                self.router_agent.send(ChangeRoute(AppRoute::Other.into()));
+                // self.router_agent.send(ChangeRoute(AppRoute::Other.into()));
                 
                 true
             }
+
+            // Msg::SelectProject(data) =>{
+            //     ConsoleService::info(&format!("get data {:?}",data));
+
+            //     self.router_agent.send(ChangeRoute(AppRoute::Project.into()));
+            //     true
+            // }
             Msg::Ignore => {
                 false
             }
@@ -140,7 +148,9 @@ impl Component for PageInput {
 
     fn view(&self) -> Html {
         html! {
-            <div class="base-form">
+        <div class="base-form">
+            <div class="form">
+            <div class="img-setting"><img src="img/test.png" alt="rust image" width="100" height="100"/></div>
                 <h5>{"Basic Information"}</h5>
                 <div class="input-group mb-3" style=" margin: auto; width: 400px;">
                     <span class="input-group-text"></span>
@@ -181,7 +191,15 @@ impl Component for PageInput {
                     <option value="superhero">{ "Jira" }</option>
                     <option value="normal">{ "Telkom Automation" }</option>
                 </select>
-                <h5>{"Scheduler Setting"}</h5>
+                 // onchange=self.link.callback(|_| {
+                //     // Msg::SelectProject
+                // })
+                    <div>
+                        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            {"Project Selection"}
+                        </button>
+                    </div>
+                <h5>{"Filter Setting"}</h5>
                 <select class="form-select mb-4" style=" margin: auto; width: 400px;" aria-label="Default select example"
                     onchange=self.link.callback(|e| {
                         if let ChangeData::Select(select) = e {
@@ -193,7 +211,7 @@ impl Component for PageInput {
                     })
                 >
                     <option>{ "Scheduler"}</option>
-                    <option value="3 Days">{ "3 Days" }</option>
+                    <option value="normal">{ "3 Days" }</option>
                     <option value="normal">{ "1 Week" }</option>
                     <option value="normal">{ "1 Month" }</option>
                 </select>
@@ -225,17 +243,68 @@ impl Component for PageInput {
                         </option>
                     <option value="normal">{ "Telkom Automation" }</option>
                 </select>
-
+                
+                <div class="btn" style="justify-content: space-around; display: flex;"> 
+                
                 <button
                     type="button"
-                    class="btn btn-primary"
+                    class="btn btn-primary mr-3" 
                     onclick=self.link.callback(|_| {
                         Msg::Login
                     })
                 >
-                    { "Create" }
+                    { "Start" }
                 </button>
 
+                <button
+                    type="button"
+                    class="btn btn-danger"
+                    onclick=self.link.callback(|_| {
+                        Msg::Login
+                    })
+                >
+                    { "Stop" }
+                </button>
+                </div>
+                
+                </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">{"Select Project"}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" style="width: 100px; height:100px"
+                            alt="Avatar" />
+                            <h6 style="padding: 10px;">{"Farrel Dava"}</h6>
+                                
+                                <div>
+                                <select class="form-select mb-4" style=" margin: auto; width: 400px;" aria-label="Default select example"
+                                    onchange=self.link.callback(|e| {
+                                        if let ChangeData::Select(select) = e {
+                                            let value = select.value();
+                                            Msg::InputSelect(value)
+                                        } else {
+                                            Msg::InputSelect("No value".to_string())
+                                        }
+                                    })
+                                >
+                                    <option>{ "List Project"}</option>
+                                    <option value="normal">{ "< Project 1 >" }</option>
+                                    <option value="normal">{ "< Project 2 >" }</option>
+                                    <option value="normal">{ "< Project 3 >" }</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{"Close"}</button>
+                                <button type="button" class="btn btn-primary">{"Save changes"}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         }
     }

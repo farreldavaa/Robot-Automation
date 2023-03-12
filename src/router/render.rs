@@ -3,18 +3,15 @@ use yew_router::prelude::*;
 
 use crate::pages::{
     homepage::HomePage,
-    other::OtherPage,
     input::PageInput,
     schedules::Schedules,
     login::Login,
+    create::Create,
+    project::Mainpage
 };
 use crate::router::route::AppRoute;
 
-
-
-
 pub enum Msg {}
-
 
 pub struct Render {}
 
@@ -45,11 +42,11 @@ impl Component for Render {
                         <HomePage/>
                     }
                 }
-                AppRoute::Other => {
-                    html! {
-                        <OtherPage/>
-                    }
-                }
+                // AppRoute::Other => {
+                //     html! {
+                //         <OtherPage/>
+                //     }
+                // }
                 AppRoute::InputPage => {
                     html! {
                         <PageInput/>
@@ -65,6 +62,17 @@ impl Component for Render {
                         <Login/>
                     }
                 }
+                AppRoute::CreateBot => {
+                    html! {
+                        <Create/>
+                    }
+                }
+                AppRoute::Project => {
+                    html! {
+                        <Mainpage/>
+                    }
+                }
+                
             }
         });
 

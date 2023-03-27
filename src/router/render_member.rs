@@ -48,14 +48,15 @@ impl Component for RenderMember {
                         <HomePage/>
                     }
                 }
+                
                 // AppRoute::Other => {
                 //     html! {
                 //         <OtherPage/>
                 //     }
                 // }
-                AppRoute::InputPage => {
+                AppRoute::InputPage{idProject} => {
                     html! {
-                        <PageInput/>
+                        <PageInput idProject=idProject/>
                     }
                 }
                 AppRoute::Schedules => {

@@ -3,7 +3,6 @@ use serde::{
     Serialize,
 };
 
-
 #[derive(Deserialize, Debug, Clone)]
 pub struct User {
     pub name: Option<String>,
@@ -31,9 +30,16 @@ pub struct Users {
     pub checkDoubleName: bool,
 }
 
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct ProjectId{
+    #[serde(rename = "$oid")]
+    pub oid: String,
+}
 
-#[derive(Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct UsersData {
+    #[serde(rename = "_id")]
+    pub id: ProjectId,
     pub name: String,
     pub description: String,
     pub platformEmail: String,
@@ -43,9 +49,9 @@ pub struct UsersData {
     pub active: bool,
     pub schedule: i64,
     pub lastActive: i64,
-    pub checkActiveStatus: bool,
-    pub checkDoubleEmail: bool,
     pub checkDoubleName: bool,
+    pub checkDoubleEmail: bool,
+    pub checkActiveStatus: bool,
 }
 
 #[derive(Deserialize, Debug, Clone)]

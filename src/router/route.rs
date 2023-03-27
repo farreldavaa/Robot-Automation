@@ -11,8 +11,8 @@ pub enum AppRoute {
     Login,
     #[to="/schedules"]
     Schedules,
-    #[to="/setting"]
-    InputPage,
+    #[to="/setting/{idProject}"]
+    InputPage {idProject : String},
     // #[to="/other"]
     // Other,
     #[to="/"]

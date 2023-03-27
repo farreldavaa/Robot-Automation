@@ -30,6 +30,9 @@ pub enum Msg {
     InputToken(String),
     InputSelect(String),
     InputActive(String),
+    CheckActiveStatus,
+    CheckDoubleName,
+    CheckDoubleEmail,
     Login,
     GetData(String),
     Ignore,
@@ -40,7 +43,6 @@ pub enum Msg {
 pub struct Create {
     // `ComponentLink` is like a reference to a component.
     // It can be used to send messages to the component
-
     // DATA
     name: String,
     description: String,
@@ -76,9 +78,9 @@ impl Component for Create {
             platformApiKey: String::from(""),
             platformEmail: String::from(""),
             cloudSessionToken: String::from(""),
-            platformType: String::from("CLOUD"),
-            schedule: 14,
-            lastActive: 14,
+            platformType: String::from(""),
+            schedule: 0,
+            lastActive: 0,
             active: false,
             checkActiveStatus: false,
             checkDoubleName: false,
@@ -110,12 +112,12 @@ impl Component for Create {
                     platformApiKey: self.platformApiKey.clone(),
                     platformType: self.platformType.clone(),
                     cloudSessionToken: self.cloudSessionToken.clone(),
-                    active: false,
-                    schedule: 14,
-                    lastActive: 14,
-                    checkActiveStatus: false,
-                    checkDoubleName: false,
-                    checkDoubleEmail: false,
+                    active: self.active.clone(),
+                    schedule: self.schedule.clone(),
+                    lastActive: self.lastActive.clone(),
+                    checkActiveStatus: self.checkActiveStatus.clone(),
+                    checkDoubleName: self.checkDoubleName.clone(),
+                    checkDoubleEmail: self.checkDoubleEmail.clone(),
                 };
 
                 //FETCHING
@@ -180,19 +182,41 @@ impl Component for Create {
             Msg::InputScheduler(data) => {
                 ConsoleService::info(&format!("data input is {:?}", data));
                 // let test = data.to_owned();
-                self.schedule = 0;
+                self.schedule = data.parse::<i64>().unwrap();
                 true
             }
             Msg::InputSelect(data) => {
                 ConsoleService::info(&format!("data input select is {:?}", data));
-                self.status = data;
+                self.platformType = data;
                 true
             }
             Msg::InputActive(data) => {
                 ConsoleService::info(&format!("data input select is {:?}", data));
-                self.status = data;
+                self.lastActive = data.parse::<i64>().unwrap();
                 true
             }
+            Msg::CheckDoubleEmail => {
+                // ConsoleService::info("Unchecked");
+                // let data = self.checkActiveStatus;
+                self.checkDoubleEmail = !self.checkDoubleEmail;
+                ConsoleService::info(&format!("check double email is {:?}", self.checkDoubleEmail));
+                true
+            }
+            Msg::CheckDoubleName => {
+                // ConsoleService::info("Unchecked");
+                // let data = self.checkActiveStatus;
+                self.checkDoubleName = !self.checkDoubleName;
+                ConsoleService::info(&format!("check double name is {:?}", self.checkDoubleName));
+                true
+            }
+            Msg::CheckActiveStatus => {
+                // ConsoleService::info("Unchecked");
+                // let data = self.checkActiveStatus;
+                self.checkActiveStatus = !self.checkActiveStatus;
+                ConsoleService::info(&format!("check double name is {:?}", self.checkActiveStatus));
+                true
+            }
+
             Msg::Login => {
                 // FETCHING....
 
@@ -259,7 +283,7 @@ impl Component for Create {
                 <h5>{"Basic Information"}</h5>
                 <div class="input-group mb-3" style=" margin: auto; width: 400px;">
                     <span class="input-group-text"></span>
-                        <input type="text" class="form-control" placeholder="Name"
+                        <input type="text" class="form-control" placeholder="Name" 
                         oninput=self.link.callback(|data: InputData| Msg::InputName(data.value))
                         />
                 </div>
@@ -272,7 +296,7 @@ impl Component for Create {
                 <h5>{"Credential Platform"}</h5>
                 <div class="input-group mb-3" style=" margin: auto; width: 400px">
                     <span class="input-group-text"></span>
-                        <input type="text" class="form-control" placeholder="API Key"
+                        <input type="text" class="form-control" placeholder="API Key" required=true
                         oninput=self.link.callback(|data: InputData| Msg::InputApi(data.value))
                         />
                 </div>
@@ -300,8 +324,8 @@ impl Component for Create {
                     })
                 >
                     <option>{ "Select Platform"}</option>
-                    <option value="CLOUD">{ "Jira Platform" }</option>
-                    <option value="SERVER">{ "Telkom Platform" }</option>
+                    <option value="CLOUD">{ "Cloud" }</option>
+                    <option value="SERVER">{ "Server" }</option>
                 </select>
                 // <h5>{"Notification Setting"}</h5>
                 // <div class="input-group mb-3" style=" margin: auto; width: 400px">
@@ -333,15 +357,15 @@ impl Component for Create {
                     <option value="14">{ "14 days" }</option>
                 </select>
                 <div class="form-check mb-3" style="margin: auto; width:400px;">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onclick=self.link.callback(|_| Msg::CheckDoubleEmail) checked={self.checkDoubleEmail}/>
                         <label class="form-check-label" for="flexCheckDefault">{"Active Email"}</label>
                 </div>
                 <div class="form-check mb-3" style="margin: auto; width:400px;">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onclick=self.link.callback(|_| Msg::CheckDoubleName) checked={self.checkDoubleName}/>
                     <label class="form-check-label" for="flexCheckDefault">{"Double Name"}</label>
                 </div>
                 <div class="form-check mb-3" style="margin: auto; width:400px;">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onclick=self.link.callback(|_| Msg::CheckActiveStatus) checked={self.checkActiveStatus}/> 
                     <label class="form-check-label" for="flexCheckDefault">{"Double Email"}</label>
                 </div>
 

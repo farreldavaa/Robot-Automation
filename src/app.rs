@@ -11,6 +11,7 @@ use std::rc::Rc;
 use yewdux::prelude::*;
 
 use crate::components::navtop::Navtop;
+use crate::components::sidebar::Sidebar;
 
 // use crate::router::route::AppRoute;
 // use crate::router::render::Render;
@@ -140,24 +141,28 @@ impl Component for App {
 
     fn view(&self) -> Html {
         
-        let is_logged_in = self.username.is_some();
-
-        if is_logged_in {
-            html! {
-                <div>
-                    <Navtop/>
-
-                    <RenderMember/>
-                </div>
-            }
-        } else {
-            html! {
-                <div>
-                    <Navtop/>
-
-                    <RenderGuest/>
-                </div>
-            }
+        html! {
+            <div>
+                <Navtop/>
+                <RenderMember/>
+            </div>
         }
+        // let is_logged_in = self.username.is_some();
+
+        // if is_logged_in {
+        //     html! {
+        //         <div>
+        //             <Navtop/>
+        //             <RenderMember/>
+        //         </div>
+        //     }
+        // } else {
+        //     html! {
+        //         <div>
+        //             <Navtop/>
+        //             <RenderGuest/>
+        //         </div>
+        //     }
+        // }
     }
 }

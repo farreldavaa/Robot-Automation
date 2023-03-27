@@ -86,26 +86,49 @@ impl Component for HomePage {
         html! {
             <div class="base">
                 <div class="homepage">
-                    <div class="container-md mb-3" style="justify-content: space-between; display: flex; border-radius: 10px;">
-                        <span>{"<Map 1>"}</span>
-                            <Anchor route=AppRoute::InputPage>
-                                <button type="button" class="btn btn-primary btn-sm pl-3">{"Setting"}
-                                </button>
-                        </Anchor>
-                    </div>
-                    <div class="container-md mb-3" style="justify-content: space-between; display: flex; border-radius: 10px;">
-                        <span>{"<Map 2>"}</span>
-                            <Anchor route=AppRoute::InputPage>
-                                <button type="button" class="btn btn-primary btn-sm pl-3">{"Setting"}
-                                </button>
-                            </Anchor>
-                    </div>
-                    <div class="container-md mb-3" style="justify-content: space-between; display: flex; border-radius: 10px;">
-                        <span>{"<Map 3>"}</span>
-                            <Anchor route=AppRoute::InputPage>
-                                <button type="button" class="btn btn-primary btn-sm pl-3">{"Setting"}
-                                </button>
-                            </Anchor>
+                    <div class="container-md" style="justify-content: flex-start;
+                    display: flex;
+                    border-radius: 10px;
+                    position: absolute;
+                    right: 0;
+                    left: 0;
+                    margin-top: 100px;
+                    width: 100%;">
+                        <div>
+                            <img src="img/robot.png" alt="rust-image" width="500" height="500"
+                            style="
+                            margin: 20px"/>   
+                        </div>
+                        <div style="">
+                            <h4 style="padding-top: 10px; 
+                            font-size: 40px;
+                            color: #A3C7D6; ">{"welcome to"}</h4>
+                            <h3 style=
+                            "font-weight: bold;
+                            font-size: 65px;
+                            color: #2E4F4F;
+                            line-height: 0.9;">{"Atlassian Robot Automation"}</h3>
+                            <p style=
+                            "padding-top: 20px;
+                            padding-right: 10px">
+                                    {"Robotic process automation (RPA)
+                                    is a software technology that makes
+                                    it easy to build, deploy, and manage
+                                    software robots that emulate humans actions
+                                    interacting with digital systems and software.
+                                    With automation robots built on this platform, 
+                                    it is intended to simplify your task management. 
+                                    Go explore more, be wild, and be more productive!
+                                    "}
+                                    </p>
+                                <div style=" text-decoration: none; color: rgb(100,100,100); padding-top: 20px">
+                                    <Anchor route=AppRoute::CreateBot>
+                                        <label class="link btn btn-secondary" style=" text-decoration: none!important;" >
+                                            {"Create New"}
+                                        </label>
+                                    </Anchor>
+                                </div>
+                        </div>
                     </div>
                     </div>
                 </div>

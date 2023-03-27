@@ -7,8 +7,9 @@ use crate::pages::{
     schedules::Schedules,
     login::Login,
     create::Create,
-    project::Mainpage
+    project::Mainpage,
 };
+
 use crate::router::route::AppRoute;
 
 pub enum Msg {}
@@ -42,14 +43,15 @@ impl Component for Render {
                         <HomePage/>
                     }
                 }
+                
                 // AppRoute::Other => {
                 //     html! {
                 //         <OtherPage/>
                 //     }
                 // }
-                AppRoute::InputPage => {
+                AppRoute::InputPage {idProject} => {
                     html! {
-                        <PageInput/>
+                        <PageInput idProject=idProject/>
                     }
                 }
                 AppRoute::Schedules => {
@@ -67,9 +69,9 @@ impl Component for Render {
                         <Create/>
                     }
                 }
-                AppRoute::Project => {
+                AppRoute::Project=> {
                     html! {
-                        <Mainpage/>
+                        <Mainpage />
                     }
                 }
                 

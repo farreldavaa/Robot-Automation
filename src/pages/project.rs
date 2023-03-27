@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use yew::prelude::*;
 
 // use crate::pages::content::Content;
@@ -21,7 +23,6 @@ use serde::{
 //     Schedule,
 //     SchedulesData,
 // };
-
 use yew_router::prelude::*;
 use crate::router::route::AppRoute;
 use crate::types::var::{
@@ -34,10 +35,11 @@ pub enum Msg {
     RequestData,
     GetData(Vec<UsersData>),
     ResponseError(String),
+    FetchId(String)
 }
 
+#[derive(Properties, Clone)]
 pub struct PageInput {
-
     username: String,
     status: String,
 }
@@ -46,7 +48,6 @@ use crate::types::var::{
     UsersData,
     ProjectList
 };
-
 
 pub struct Mainpage {
     // `ComponentLink` is like a reference to a component.
@@ -57,6 +58,7 @@ pub struct Mainpage {
     error: Option<String>,
     value: i64,
     message: String,
+    id: String,
 }
 
 impl Component for Mainpage {
@@ -72,13 +74,15 @@ impl Component for Mainpage {
             project: vec![],
             fetch_task: None,
             error: None,
+            id: String::from("")
         }
     }
 
     fn rendered(&mut self, first_render: bool) {
         if first_render {
-            ConsoleService::info("Project Render");
+            self.link.send_message(Msg::RequestData)
         }
+        
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -96,7 +100,7 @@ impl Component for Mainpage {
                     self.link.callback(|response: Response<Json<Result<Vec<UsersData>, anyhow::Error>>>| {
                         let (meta, Json(data)) = response.into_parts();
                         let status_number = meta.status.as_u16();
-                        
+                        // ConsoleService::info(&format!("data response {:?}",));
                         ConsoleService::info(&format!("Status is{:?}", data));
                         match data {
                             Ok(dataok) => {
@@ -141,6 +145,10 @@ impl Component for Mainpage {
                 self.error = Some(text);
                 true
             }
+            Msg::FetchId(id)=>{
+                self.id = id;
+                true
+            }
         }
     }
 
@@ -156,31 +164,16 @@ impl Component for Mainpage {
         type Anchor = RouterAnchor<AppRoute>;
 
         html! {
-            <div class="base">
-                <div class="homepage">
-                    <div class="container-md mb-3" style="border-radius: 10px;">
-                        <div class="container-md mb-3" style="justify-content: space-between; display: flex; border-radius: 10px;">
-                            <h5>{"Bot 1"}</h5>
-                                <Anchor route=AppRoute::InputPage>
-                                    <button type="button" class="btn btn-primary btn-sm pl-3">{"Setting"}
-                                    </button>
-                                </Anchor>
-                        </div>
-                        <div>
-                            <span class="badge bg-success">{"Status : Running"}</span>
-                        </div>
-                    </div>
-                    
-                   
-                    
-                    <div>
-                    <button
-                        class="badge rounded-pill bg-primary"
-                        onclick=self.link.callback(|_| Msg::RequestData)
-                    >
-                        { "Get More Data" }
-                    </button>
-                </div>
+            <div class="base-projects">
+                <div class="projects">
+                //     <div>
+                //     <button
+                //         class="badge rounded-pill bg-primary"
+                //         onclick=self.link.callback(|_| Msg::RequestData)
+                //     >
+                //         { "Get More Data" }
+                //     </button>
+                // </div>
                 
                 {self.view_index_data()}
                     </div>
@@ -195,22 +188,41 @@ impl Mainpage{
             type Anchor = RouterAnchor<AppRoute>;
                     html!{
                         <div class="card mt-4 mb-2"
-                        style="background: white;
+                        style="
                         width: 1200px;
                         margin: auto;
                         ">
                             <div class="card-body" style="color: gray;">
-                                <h4 class="card-title">
+                                <h4 class="card-title" style="color: black;">
                                     {&card.name}
                                 </h4>
-                                <Anchor route=AppRoute::InputPage>
+                                <h6 class="card-title">
+                                    {&card.description}
+                                </h6>
+                                {
+                                    if card.active.to_string().contains("true"){
+                                        html!{
+                                            <span class="badge bg-success">
+                                                {&card.active}
+                                            </span>
+                                        }
+                                    } else{
+                                        html!{
+                                            <span class="badge bg-danger">
+                                                {&card.active}
+                                            </span>
+                                        }
+                                    }
+                                }
+                                <div>
+                                <Anchor route=AppRoute::InputPage {idProject : card.id.oid.clone()}>
                                     <button type="button" class="btn btn-primary btn-sm pl-3">{"Setting"}
                                     </button>
                                  </Anchor>
-                                <div>
-                                    <span class="badge bg-success">{&card.active}</span>
+                                    
                                 </div>
                             </div>
+                            
                         </div>
                     }
         }).collect()

@@ -63,43 +63,75 @@ impl Component for Navtop {
         type Anchor = RouterAnchor<AppRoute>;
 
         html! {
-            <div class="base" style="background: teal; text-align: center;">
-                <div class="navbar">
-                    <h5 style="color: white;">{"Robot Automation"}</h5>
-                        <div class="navbar-option" style="justify-content: space-around; display: flex;">
-                                // <div style=" text-decoration: none; color: black;">
-                                    <Anchor route=AppRoute::Home>
-                                        <label class="link" style=" text-decoration: none!important; ">
+            <>
+            <div class="header">       
+                <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu"/>
+                    <label for="openSidebarMenu" class="sidebarIconToggle">
+                        <div class="spinner diagonal part-1"></div>
+                        <div class="spinner horizontal"></div>
+                        <div class="spinner diagonal part-2"></div>
+                    </label>
+                <div class="sidebar" id="sidebarMenu">
+                    <ul class="sidebarMenuInner">
+                        <li>{"Digital Business"} <span>{"Web Development"}</span></li>
+                        <li class="sidebarDrop"><a>{"Robot Automation"}</a>
+                            <ul class="serviceProjects">
+                                <li>
+                                <Anchor route=AppRoute::Home>
                                             {"Homepage"}
-                                        </label>
                                     </Anchor>
-                                // </div>
-
-                                // <div style=" text-decoration: none; color: rgb(100,100,100);">
-                                    <Anchor route=AppRoute::CreateBot>
-                                        <label class="link" style=" text-decoration: none!important;" >
-                                            {"Create new"}
-                                        </label>
+                                </li>
+                            </ul>
+                            <ul class="serviceProjects">
+                                <li>
+                                <Anchor route=AppRoute::Project>
+                                            {"Project"}
                                     </Anchor>
-                                // </div>
-                        </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="https://instagram.com/plavookac" target="_blank">{"Connector"}</a></li>
+                    </ul>
                 </div>
-                // <div style="text-decoration: none; color: rgb(100,100,100);">
-                //     <Anchor route=AppRoute::Schedules>
-                //         <p class="link" style=" text-decoration: none!important; color: rgb(100,100,100);">
-                //             {"Schedules"}
-                //         </p>
-                //     </Anchor>
-                // </div>
-                // <div style=" text-decoration: none; color: rgb(100,100,100);">
-                //     <Anchor route=AppRoute::Login>
-                //         <p class="link" style=" text-decoration: none!important; color: rgb(100,100,100);">
-                //             {"Login"}
-                //         </p>
-                //     </Anchor>
-                // </div>
-
+            <h5 class="new-navbar">{"Robot Automation"}</h5>
             </div>
+            // <div class="base-navtop">
+            //     <div class="navbar">
+            //             <div class="navbar-option" style="justify-content: space-around; display: flex;">
+            //                     <div class="ml-3 mr-3 pr-3 pl-3" style="padding-right: 10px">
+            //                         <Anchor route=AppRoute::Home>
+            //                             <label class="link btn btn-light pl-5" style="">
+            //                                 {"Homepage"}
+            //                             </label>
+            //                         </Anchor>
+            //                     </div>
+            //                     <div class="ml-3 mr-3 pr-3 pl-3" style="">
+            //                         <Anchor route=AppRoute::Project>
+            //                             <label class="link btn btn-light pl-5" style="">
+            //                                 {"Project"}
+            //                             </label>
+            //                         </Anchor>
+            //                     </div>
+            //             </div>
+            //             // </div>
+            //     </div>
+            //     // <div style="text-decoration: none; color: rgb(100,100,100);">
+            //     //     <Anchor route=AppRoute::Schedules>
+            //     //         <p class="link" style=" text-decoration: none!important; color: rgb(100,100,100);">
+            //     //             {"Schedules"}
+            //     //         </p>
+            //     //     </Anchor>
+            //     // </div>
+            //     // <div style=" text-decoration: none; color: rgb(100,100,100);">
+            //     //     <Anchor route=AppRoute::Login>
+            //     //         <p class="link" style=" text-decoration: none!important; color: rgb(100,100,100);">
+            //     //             {"Login"}
+            //     //         </p>
+            //     //     </Anchor>
+            //     // </div>
+
+            // </div>
+            </>
         }
     }
 }

@@ -7,7 +7,6 @@ a {
     text-decoration: none!important;
 }
 
-
 .link {
     color: rgb(31, 31, 31);
 }
@@ -20,21 +19,41 @@ a {
     font-size: 24px;
 }
 
-.base .navbar{
+.base-navtop{
+    background: rgb(228, 81, 81);
+    text-align: center;
+}
+
+.base-navtop .navbar{
     padding: 10px;
-    
+}
+
+.base{
+    padding-top: 60px;
 }
 
 .base .homepage{
     background-color: rgb(228, 228, 228);
-    height: 100vh;
+    height: 93.5vh;
+}
+.base-projects .projects{
+    background-color: rgb(228, 228, 228);
+    position: absolute;
+    padding-top: 60px;
+    right: 0;
+    left: 0;
+    overflow: auto;
+    height: 100%;
 }
 
 .base-form{
-    padding: 50px;
+    padding-top: 100px;
     text-align: center;
-    height: 120vh;
+    height: 100vh;
     background-color: rgb(228, 228, 228);
+    position: absolute;
+    right: 0;
+    left: 0;
 }
 
 .base-form .form{
@@ -52,6 +71,7 @@ a {
 .base-form .create{
     background-color: white;
     padding: 30px;
+    margin-top: 23px;
     position: absolute;
     left: 50%;
     transform: translate(-50%);
